@@ -33,35 +33,49 @@ def input_cleaning(entry):
     #remove filler words / stop words
     remove =  set(stopwords.words('english'))
     stems = WordNetLemmatizer()
-    cleaned_entry = []
     wordlist = []
     for word in tokens:
         if word not in remove:
             wordlist.append(stems.lemmatize(word))
-    cleaned_entry.append(' '.join(wordlist))
+    cleaned_entry=' '.join(wordlist)
     print (cleaned_entry)
     return cleaned_entry
 
 def input_breakdown(cleaned_entry):
     tokens = nltk.word_tokenize(cleaned_entry) #error here (expected string)
-    keywords = ['patient', 'diagnose', 'give']
+    keywords = ['patient', 'diagnosed', 'give']
 
     split_entry = {
         'patient': None,
-        'diagnose': None,
+        'diagnosed': None,
         'give': None
     }
 
-    for i in range(len(tokens)):
+    last_key = None
+    i = 0
+    while i < len(tokens):
+        print(i)
         if tokens[i] in keywords:
             last_key = tokens[i]
-            i+=1
+            
         else:
             sentence = []
-            while tokens[i] not in keywords:
-                sentence.append(tokens[i])
+            sentence.append(tokens[i])
+            #j = i
+            while i < len(tokens)-1 and tokens[i+1] not in keywords:
                 i+=1
+                print(i)
+                sentence.append(tokens[i])
+                print(' '.join(sentence))
+            if (last_key == None):
+                print("ERROR: Please format correctly")
+                return None
+           
+            
+            print(' '.join(sentence))
             split_entry[last_key] = ' '.join(sentence)
+        i+=1
+    
     print (split_entry)
     return split_entry
 
@@ -78,7 +92,7 @@ entry = input_cleaning(entry)
 split_entry = input_breakdown(entry)
 #resultwords  = [word for word in entryWords if word.lower() not in ['the', 'and']]
 #entry.replace("the", "")
-print("entry = "+entry)
+print("entry = "+ str(split_entry))
 
 
 #Microphone(device_index: Union[int,None] = None, sample_rate: int = 16000,
