@@ -2,6 +2,8 @@ import speech_recognition as sr
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+import mysql.connector as sqlcon
+from mysql.connector import errorcode
 
 
 #nltk.download('popular')
@@ -80,11 +82,36 @@ def input_breakdown(cleaned_entry):
     return split_entry
 
 
-#setup
+#database setup
 r = sr.Recognizer()
 mic = sr.Microphone()
 
+try:
+    mydb = sqlcon.connect(
+        host = 'localhost',
+        user = 'root',
+        password = 'password',
+        database = 'medical'
+    )
 
+except sqlcon.Error as err:
+  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+    print("Something is wrong with your user name or password")
+  elif err.errno == errorcode.ER_BAD_DB_ERROR:
+    print("Database does not exist")
+  else:
+    print(err)
+
+print(f"connected to database ({mydb.database})")
+mycursor = mydb.cursor()
+#mycursor.execute("INSERT INTO patients (PName, PAge, PHistory) VALUES ('Ben Taylor', '22', 'Back pain, Fever');")
+mycursor.execute("SELECT * FROM patients")
+initres =  mycursor.fetchall()
+
+for x in initres:
+    print(x)
+
+mydb.commit()
 
 entry = input_speech(r, mic)
 #entryWords = entry.split()
