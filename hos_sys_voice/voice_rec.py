@@ -1,3 +1,11 @@
+#kivy app
+from kivy.app import App
+from kivy.uix.label import Label
+from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
+from kivy.lang import Builder
+
 import speech_recognition as sr
 import nltk
 from nltk.corpus import stopwords
@@ -81,46 +89,65 @@ def input_breakdown(cleaned_entry):
     print (split_entry)
     return split_entry
 
+#main app UI
+class StartScreen(Screen):
+    pass
 
-#database setup
-r = sr.Recognizer()
-mic = sr.Microphone()
+class MainScreen(Screen):
+    pass
 
-try:
-    mydb = sqlcon.connect(
-        host = 'localhost',
-        user = 'root',
-        password = 'password',
-        database = 'medical'
-    )
+class ScreenManagement(ScreenManager):
+    pass
+presentation = Builder.load_file("startmain.kv")
 
-except sqlcon.Error as err:
-  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-    print("Something is wrong with your user name or password")
-  elif err.errno == errorcode.ER_BAD_DB_ERROR:
-    print("Database does not exist")
-  else:
-    print(err)
+class StartMainApp(App):
+    def build(self): 
+        return presentation
 
-print(f"connected to database ({mydb.database})")
-mycursor = mydb.cursor()
-#mycursor.execute("INSERT INTO patients (PName, PAge, PHistory) VALUES ('Ben Taylor', '22', 'Back pain, Fever');")
-mycursor.execute("SELECT * FROM patients")
-initres =  mycursor.fetchall()
+    def on_button_press(self):
+        r = sr.Recognizer()
+        mic = sr.Microphone()
 
-for x in initres:
-    print(x)
+        try:
+            mydb = sqlcon.connect(
+                host = 'localhost',
+                user = 'root',
+                password = 'password',
+                database = 'medical'
+            )
 
-mydb.commit()
+        except sqlcon.Error as err:
+            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                print("Something is wrong with your user name or password")
+            elif err.errno == errorcode.ER_BAD_DB_ERROR:
+                print("Database does not exist")
+            else:
+                print(err)
 
-entry = input_speech(r, mic)
-#entryWords = entry.split()
-entry = input_cleaning(entry)
-split_entry = input_breakdown(entry)
-#resultwords  = [word for word in entryWords if word.lower() not in ['the', 'and']]
-#entry.replace("the", "")
-print("entry = "+ str(split_entry))
+        print(f"connected to database ({mydb.database})")
+        mycursor = mydb.cursor()
+        #mycursor.execute("INSERT INTO patients (PName, PAge, PHistory) VALUES ('Ben Taylor', '22', 'Back pain, Fever');")
+        mycursor.execute("SELECT * FROM patients")
+        initres =  mycursor.fetchall()
+
+        for x in initres:
+            print(x)
+
+        mydb.commit()
+
+        entry = input_speech(r, mic)
+        #entryWords = entry.split()
+        entry = input_cleaning(entry)
+        split_entry = input_breakdown(entry)
+        #resultwords  = [word for word in entryWords if word.lower() not in ['the', 'and']]
+        #entry.replace("the", "")
+        print("entry = "+ str(split_entry))
 
 
-#Microphone(device_index: Union[int,None] = None, sample_rate: int = 16000,
-#chunk_size: int = 1024) -> Microphone
+        #Microphone(device_index: Union[int,None] = None, sample_rate: int = 16000,
+        #chunk_size: int = 1024) -> Microphone
+
+if __name__ == '__main__':
+    #database setup
+    app = StartMainApp()
+    app.run()

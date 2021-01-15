@@ -1,0 +1,26 @@
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+ScreenManagement:
+    transition: FadeTransition()
+    StartScreen:
+    MainScreen:
+
+<MainScreen>:
+    name: "main"
+    Button:
+        on_press: app.on_button_press()
+        text: "Click to input"
+        font_size: 25
+
+<StartScreen>:
+    name: "start"
+    Button:
+        text: "Welcome to Project-H\n (click to begin)"
+        size_hint: (.5, .5)
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        background_normal: ''
+        background_color: 0,0,0,0
+        border: 1,0,0,1
+        on_release: app.root.current = "main"
+
+   

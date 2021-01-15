@@ -1,5 +1,6 @@
 pip install mysql-connector-python
 pip install SpeechRecognition
 pip install --user -U nltk
+pip install kivy
 
 nltk.download('popular')
