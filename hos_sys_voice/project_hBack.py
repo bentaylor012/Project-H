@@ -12,6 +12,8 @@ from mysql.connector import errorcode
 #nltk.download('popular')
 #print(sr.Microphone.list_microphone_names())
 
+#TODO: integrate with front end when needed
+
 def input_speech (r, mic):
     with mic as source:
         r.adjust_for_ambient_noise(source)
