@@ -6,6 +6,8 @@ ScreenManagement:
     transition: FadeTransition()
     StartScreen:
     MainScreen:
+    TypeScreenEntry:
+    TypeScreenPatient:
 <Button>:
     size_hint: .25, .25
 
@@ -23,6 +25,10 @@ ScreenManagement:
             on_press: app.entry_man()
             text: "Manual Input"
             font_size: 25
+            color: 0,0,0,1
+            background_normal: ''
+            background_color: 1,1,1,1
+            on_release:app.root.current = "entry"
 
         Button:
             on_press: app.lookup_patient_voice()
@@ -32,6 +38,9 @@ ScreenManagement:
             on_press: app.lookup_patient_man()
             text: "Manual Input"
             font_size: 25
+            color: 0,0,0,1
+            background_normal: ''
+            background_color: 1,1,1,1
 
     Button:
         on_press: app.on_button_press()
@@ -58,4 +67,38 @@ ScreenManagement:
         border: 1,0,0,1
         on_release: app.root.current = "main"
 
-   
+<TypeScreenEntry>:
+    name: "entry"
+    GridLayout:
+        cols:2
+        size_hint: (1, .9)
+        pos_hint: {'top': 1}
+        Label:
+            text: "Patient (first last):"
+        TextInput:
+            multiline: False
+            hint_text:'First Last'
+
+        Label:
+            text: "diagnosis:"
+        TextInput:
+            multiline: False
+            hint_text:'item1, item2'
+
+        Label:
+            text: "treatment:"
+        TextInput:
+            multiline: False
+            hint_text:'item, item2'
+
+        Label:
+            text: "other:"
+        TextInput:
+            multiline: False
+    Button:
+        size_hint: (1, .1)
+        pos_hint:{'bottom': 0}
+        text: "enter"
+        background_normal: ''
+        background_color: 1,1,1,1
+        color: 0,0,0,1

@@ -18,6 +18,12 @@ class StartScreen(Screen):
 class MainScreen(Screen):
     pass
 
+class TypeScreenEntry(Screen):
+    pass
+
+class TypeScreenPatient(Screen):
+    pass
+
 class ScreenManagement(ScreenManager):
     pass
 presentation = Builder.load_file("startmain.kv")
@@ -32,9 +38,15 @@ class StartMainApp(App):
     
     def entry_voice(self):
         print("start new entry")
+
+    def entry_man(self):
+        print("type new entry")
     
     def lookup_patient_voice(self):
         print("who to look up")
+    
+    def lookup_patient_man(self):
+        print("type who to look up")
 
 
         #Microphone(device_index: Union[int,None] = None, sample_rate: int = 16000,
