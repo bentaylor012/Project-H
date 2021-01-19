@@ -1,26 +1,53 @@
 #:kivy 2.0.0
 #: import FadeTransition kivy.uix.screenmanager.FadeTransition
+#: import GridLayout kivy.uix.gridlayout.GridLayout
 
 ScreenManagement:
     transition: FadeTransition()
     StartScreen:
     MainScreen:
+<Button>:
+    size_hint: .25, .25
 
 <MainScreen>:
     name: "main"
+    GridLayout:
+        cols:2
+        size_hint: 1, .5
+        pos_hint:{"top": 1}
+        Button:
+            on_press: app.entry_voice()
+            text: "Enter / Update"
+            font_size: 25
+        Button:
+            on_press: app.entry_man()
+            text: "Manual Input"
+            font_size: 25
+
+        Button:
+            on_press: app.lookup_patient_voice()
+            text: "Search Patient"
+            font_size: 25
+        Button:
+            on_press: app.lookup_patient_man()
+            text: "Manual Input"
+            font_size: 25
+
     Button:
         on_press: app.on_button_press()
-        text: "Click to input"
-        font_size: 25
+        text: "EXIT"
+        font_size: 100
+        pos_hint: {"center_x": .5, "top" :.2}
+        background_color: 1,0,1,1
+    
 
 <StartScreen>:
-    #size_hint:(None,None)
     name: "start"
     Label:
         text: "Your verbal data entry assistant"
-        size_hint:(.05, .05)
-        pos_hint: {"x": .1, "top" :.05}
-        font_size: 12
+        size_hint:(None, None)
+        pos_hint: {"x": .3, "top" :.2}
+        font_size_hint: (.3, .3)
 
     Button:
         text: "Welcome to Project-H\n (click to begin)"
