@@ -3,6 +3,7 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.textinput import TextInput 
 
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.lang import Builder
@@ -48,7 +49,20 @@ class StartMainApp(App):
     def lookup_patient_man(self):
         print("type who to look up")
 
-
+    def process(self, entry):
+        patient = entry
+        print(patient)
+        #Microphone(device_index: Union[int,None] = None, sample_rate: int = 16000,
+        #chunk_size: int = 1024) -> Microphone
+    
+    def process2(self, pEntry, dEntry, tEntry):
+        entry ={
+            'patient': str(pEntry),
+            'diagnosis': str(dEntry),
+            'treatment': str(tEntry)
+        }
+        print(pEntry)
+        print(str(entry))
         #Microphone(device_index: Union[int,None] = None, sample_rate: int = 16000,
         #chunk_size: int = 1024) -> Microphone
 

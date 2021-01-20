@@ -41,6 +41,7 @@ ScreenManagement:
             color: 0,0,0,1
             background_normal: ''
             background_color: 1,1,1,1
+            on_release:app.root.current = "patient"
 
     Button:
         on_press: app.on_button_press()
@@ -71,23 +72,26 @@ ScreenManagement:
     name: "entry"
     GridLayout:
         cols:2
-        size_hint: (1, .9)
-        pos_hint: {'top': 1}
+        size_hint: (1, .8)
+        pos_hint: {'top': .9}
         Label:
             text: "Patient (first last):"
         TextInput:
+            id: fl1
             multiline: False
             hint_text:'First Last'
 
         Label:
             text: "diagnosis:"
         TextInput:
+            id: diag
             multiline: False
             hint_text:'item1, item2'
 
         Label:
             text: "treatment:"
         TextInput:
+            id: treat
             multiline: False
             hint_text:'item, item2'
 
@@ -102,3 +106,42 @@ ScreenManagement:
         background_normal: ''
         background_color: 1,1,1,1
         color: 0,0,0,1
+        on_release:app.process2(fl1.text, diag.text, treat.text)
+
+    Button:
+        size_hint: (.2, .1)
+        pos_hint:{'top': 1}
+        text: "BACK"
+        background_normal: ''
+        background_color: 0,1,1,1
+        color: 0,0,0,1
+        on_release: app.root.current = "main"
+
+<TypeScreenPatient>:
+    name:'patient'
+    GridLayout:
+        cols:2
+        size_hint: (1, .1)
+        pos_hint: {'top': .9}
+        Label:
+            text: "Patient (first last):"
+        TextInput:
+            id: p1
+            multiline: False
+            hint_text:'First Last'
+            #on_text: app.process()
+        Button:
+            text: "enter"
+            on_release:app.process(p1.text)
+
+        Label:
+            text: p1.text
+    
+    Button:
+        size_hint: (.2, .1)
+        pos_hint:{'top': 1}
+        text: "BACK"
+        background_normal: ''
+        background_color: .45,.83,.7,1
+        color: 0,0,0,1
+        on_release: app.root.current = "main"
