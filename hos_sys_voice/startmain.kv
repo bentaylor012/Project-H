@@ -106,7 +106,8 @@ ScreenManagement:
         background_normal: ''
         background_color: 1,1,1,1
         color: 0,0,0,1
-        on_release:app.process2(fl1.text, diag.text, treat.text)
+        on_release: app.process2(fl1, diag.text, treat.text)
+        #on_release: fl1.text = diag.text = treat.text = ''
 
     Button:
         size_hint: (.2, .1)

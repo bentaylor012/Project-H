@@ -39,32 +39,39 @@ class StartMainApp(App):
     
     def entry_voice(self):
         print("start new entry")
+        #
 
     def entry_man(self):
         print("type new entry")
+        #
     
     def lookup_patient_voice(self):
         print("who to look up")
-    
+        #
+
     def lookup_patient_man(self):
         print("type who to look up")
+        #
 
     def process(self, entry):
         patient = entry
         print(patient)
-        #Microphone(device_index: Union[int,None] = None, sample_rate: int = 16000,
-        #chunk_size: int = 1024) -> Microphone
+        #query with entry return buttons
     
     def process2(self, pEntry, dEntry, tEntry):
         entry ={
-            'patient': str(pEntry),
-            'diagnosis': str(dEntry),
-            'treatment': str(tEntry)
+            'patient': pEntry,
+            'diagnosis': dEntry,
+            'treatment': tEntry
         }
-        print(pEntry)
-        print(str(entry))
-        #Microphone(device_index: Union[int,None] = None, sample_rate: int = 16000,
-        #chunk_size: int = 1024) -> Microphone
+        print(entry)
+
+        #reset the entries
+        pEntry= ''
+        dEntry=''
+        tEntry=''
+        
+        #send the dictionary to backend
 
 if __name__ == '__main__':
     #database setup

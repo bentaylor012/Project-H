@@ -107,6 +107,18 @@ def getPatient(name):
         return initres
 #Button Press logic
 
+def buildInput(elems):
+    #get old input
+    mycursor = mydb.cursor()
+    #mycursor.execute("INSERT INTO patients (PName, PAge, PHistory) VALUES ('Ben Taylor', '22', 'Back pain, Fever');")
+    mycursor.execute("SELECT * FROM patients WHERE 'pName' = elems.patient")
+    result = mycursor.fetchall()
+    
+    #update the values
+    updateRes = ''
+    #update the values in the table
+    mycursor.execute(f"UPDATE patients SET {updateRes}")
+
 def begin():
     r = sr.Recognizer()
     mic = sr.Microphone()
