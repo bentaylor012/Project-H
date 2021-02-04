@@ -8,8 +8,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.lang import Builder
 
-#import backend
-#mport project_hBack as backend
+import project_hBack as backend
 
 
 #main app UI
@@ -39,6 +38,7 @@ class StartMainApp(App):
     
     def entry_voice(self):
         print("start new entry")
+        backend.speech_option()
         #
 
     def entry_man(self):
@@ -75,5 +75,6 @@ class StartMainApp(App):
 
 if __name__ == '__main__':
     #database setup
+    backend.begin()
     app = StartMainApp()
     app.run()

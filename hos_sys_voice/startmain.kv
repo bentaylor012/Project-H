@@ -20,11 +20,11 @@ ScreenManagement:
         Button:
             on_press: app.entry_voice()
             text: "Enter / Update"
-            font_size: 25
+            #font_size: 25
         Button:
             on_press: app.entry_man()
             text: "Manual Input"
-            font_size: 25
+            #font_size: 25
             color: 0,0,0,1
             background_normal: ''
             background_color: 1,1,1,1
@@ -33,11 +33,11 @@ ScreenManagement:
         Button:
             on_press: app.lookup_patient_voice()
             text: "Search Patient"
-            font_size: 25
+            #font_size: 25
         Button:
             on_press: app.lookup_patient_man()
             text: "Manual Input"
-            font_size: 25
+            #font_size: 25
             color: 0,0,0,1
             background_normal: ''
             background_color: 1,1,1,1
@@ -46,7 +46,7 @@ ScreenManagement:
     Button:
         on_press: app.on_button_press()
         text: "EXIT"
-        font_size: 100
+        #font_size: 50
         pos_hint: {"center_x": .5, "top" :.2}
         background_color: 1,0,1,1
     
@@ -106,8 +106,7 @@ ScreenManagement:
         background_normal: ''
         background_color: 1,1,1,1
         color: 0,0,0,1
-        on_release: app.process2(fl1, diag.text, treat.text)
-        #on_release: fl1.text = diag.text = treat.text = ''
+        on_release: app.process2(fl1.text, diag.text, treat.text)
 
     Button:
         size_hint: (.2, .1)

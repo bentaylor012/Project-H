@@ -5,12 +5,11 @@ from nltk.stem import WordNetLemmatizer
 import mysql.connector as sqlcon
 from mysql.connector import errorcode
 
-#import mysql.connector as sqlcon
-#from mysql.connector import errorcode
 
-
-#nltk.download('popular')
-#print(sr.Microphone.list_microphone_names())
+#global variables
+mydb = None
+r = sr.Recognizer()
+mic = sr.Microphone()
 
 def input_speech (r, mic):
     with mic as source:
@@ -111,18 +110,19 @@ def buildInput(elems):
     #get old input
     mycursor = mydb.cursor()
     #mycursor.execute("INSERT INTO patients (PName, PAge, PHistory) VALUES ('Ben Taylor', '22', 'Back pain, Fever');")
-    mycursor.execute("SELECT * FROM patients WHERE 'pName' = elems.patient")
+    mycursor.execute("SELECT (PMedHist, PHealthHist) FROM patients WHERE 'pName' = {elems.patient}")
     result = mycursor.fetchall()
     
-    #update the values
-    updateRes = ''
+    #update the values health history and then med
+    updateHist = result[0]+" " +elems.diagnosis
+    updateMed = result[1] + " "+ elems.treatment
     #update the values in the table
-    mycursor.execute(f"UPDATE patients SET {updateRes}")
+    mycursor.execute(f"UPDATE patients SET PHealthHist = {updateHist}, PMedHist = {updateMed}")
+    mydb.commit()
 
+
+#setup of all things backend
 def begin():
-    r = sr.Recognizer()
-    mic = sr.Microphone()
-
     try:
         mydb = sqlcon.connect(
             host = 'localhost',
@@ -150,6 +150,8 @@ def begin():
 
     mydb.commit()
 
+
+def speech_option():
     entry = input_speech(r, mic)
     #entryWords = entry.split()
     entry = input_cleaning(entry)
