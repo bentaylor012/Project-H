@@ -163,4 +163,21 @@ def speech_option():
     print (split_entry)
     return split_entry
 
+#finds the patient name in the input and returns it
+def get_name(text):
+    name = ''
+    person = []
+    tokens = nltk.tokenize.word_tokenize(text)
+    pos = nltk.pos_tag(tokens)
+    tree = nltk.ne_chunk(pos,binary=False)
+
+    for subtree in tree.subtrees(filter=lambda t: t.node == 'PERSON'):
+        for leaf in subtree.leaves():
+            person.append(leaf[0])
+
+        if len(person)>1:
+            for part in person:
+                name += part + ' '
+
+    return name
     
